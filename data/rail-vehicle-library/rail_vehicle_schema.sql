@@ -80,3 +80,12 @@ CREATE TABLE ntd_city_coverage (
 );
 CREATE INDEX ntd_deployment_city_idx ON ntd_fleet_deployment(service_city_region);
 CREATE INDEX ntd_deployment_agency_idx ON ntd_fleet_deployment(agency);
+-- Researched specifications complement, but do not overwrite, the NTD-reported profile fields.
+ALTER TABLE ntd_vehicle_profile ADD COLUMN researched_max_speed_kmh REAL;
+ALTER TABLE ntd_vehicle_profile ADD COLUMN speed_basis TEXT;
+ALTER TABLE ntd_vehicle_profile ADD COLUMN speed_source_url TEXT;
+ALTER TABLE ntd_vehicle_profile ADD COLUMN researched_capacity_seated INTEGER;
+ALTER TABLE ntd_vehicle_profile ADD COLUMN researched_capacity_total INTEGER;
+ALTER TABLE ntd_vehicle_profile ADD COLUMN capacity_basis TEXT;
+ALTER TABLE ntd_vehicle_profile ADD COLUMN capacity_source_url TEXT;
+ALTER TABLE ntd_vehicle_profile ADD COLUMN spec_checked_on TEXT;
