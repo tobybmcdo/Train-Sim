@@ -10,7 +10,11 @@ $listener.Start()
 $address = "http://127.0.0.1:$Port/"
 Write-Host "Rail Network Builder is running at $address"
 Write-Host 'Keep this window open while you play. Press Ctrl+C to stop the local game server.'
-Start-Process $address
+try {
+    Start-Process $address
+} catch {
+    Write-Host "Your browser did not open automatically. Open $address in your browser."
+}
 
 try {
     while ($listener.Server.IsBound) {
