@@ -50,3 +50,15 @@ Generated on 2026-11-09. Audit the seed records and database rights before shipp
 ## Regional coverage added
 
 New York City region coverage now includes NYCT subway and Staten Island Railway cars, plus LIRR and Metro-North commuter passenger cars. See [New York City fleet research and sources](us_new_york_city_sources.md). The coverage reflects operator fleet lists, not every outside operator that reaches New York City.
+
+## U.S. rail inventory baseline (2025 NTD)
+
+The 2025 FTA National Transit Database Revenue Vehicle Inventory adds a nationwide U.S. rail baseline in three linked CSVs:
+
+- `us_rail_vehicle_profiles_2025.csv`: 859 reported vehicle specification profiles, deduplicated across agencies.
+- `us_rail_fleet_deployments_2025.csv`: 2,259 active inventory records linked to profiles, covering 80 reporting agencies and 24,589 active revenue vehicles.
+- `us_rail_city_coverage_2025.csv`: grouped coverage for 73 city/service regions.
+
+Rows include commuter rail, heavy rail, light rail, cable cars, vintage trolleys, automated guideway, inclined plane, monorail, and aerial tramway vehicles. One NTD inventory row can represent multiple active vehicles. Capacity fields reproduce NTD seated and standing counts per vehicle; `capacity_total` is their sum when both source values are present. Length is preserved in feet and converted to meters. `max_speed_kmh` is blank because the inventory does not publish speed. `service_city_region` and state abbreviations are practical metro/service-area mappings inferred from reporting agencies; NTD IDs and agency names are retained. Multi-region services are labeled accordingly.
+
+Source: [FTA 2025 NTD Revenue Vehicle Inventory](https://data.transportation.gov/Public-Transit/2025-NTD-Annual-Data-Revenue-Vehicle-Inventory/ifzt-j53d), checked 2026-11-09. This is a reporting baseline, not a claim that every U.S. city or every non-NTD, heritage, or private rail operator is covered. Some agencies report several modes and some commuter agencies span multiple cities. Review the region mapping and licensing terms before commercial redistribution.
