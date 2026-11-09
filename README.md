@@ -83,3 +83,6 @@ Keep **infrastructure, services, organizations, and vehicles** as separate but c
 - Keep the visual design grounded in railways with a readable map, strong route colors, and distinct vehicle silhouettes.
 
 For every screen, ask: **Can a new player tell what they’re looking at, what they can do next, and what changed because of their decision?**
+
+
+The first lightweight map screen is [`map-prototype.html`](map-prototype.html). It is a standalone Canvas 2D prototype with a generalized contiguous-U.S. outline, selectable hex tiles, generated terrain relief, and terrain, population, combined, and rail-potential views. It runs locally without a map API or large mapping library. Its shape and terrain are illustrative; the population layer uses seeded major-metro estimates to demonstrate the game mechanic and should be replaced with licensed Census and geographic datasets before being presented as authoritative data.
