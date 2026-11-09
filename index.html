@@ -19,7 +19,7 @@ body[data-theme="light"]{color-scheme:light;--bg:#e9eee9;--panel:#fff;--panel2:#
 <header class="launchhead"><div><div class="tag">A small rail-building game</div><h1>Rail Network Builder</h1><div class="launchintro">Choose where your railway story begins. Build connections between people and places, one map tile at a time.</div></div><div class="settings"><label for="theme">Appearance</label><select id="theme" aria-label="Appearance"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div></header>
 <div class="launchgrid"><section class="panel"><h2>Start a new world</h2><div class="field"><label for="world-name">World name</label><input id="world-name" maxlength="40" placeholder="My railway world" value=""></div><div class="field"><label for="country">Starting country</label><select id="country"><option value="us">United States</option><option value="ca">Canada</option><option value="gb">United Kingdom</option><option value="fr">France</option><option value="de">Germany</option><option value="jp">Japan</option><option value="au">Australia</option></select></div><button class="primary" id="create-world">Create world</button><p class="small">Worlds save automatically on this computer. Steam cloud saves may be added later.</p></section>
 <section class="panel"><h2>Your worlds</h2><div id="world-list" class="worlds"></div></section></div>
-<p class="footnote">This testing build stores saved worlds in this browser on this computer. Clearing browser storage removes those saves. The map is a lightweight gameplay illustration with estimated population, terrain, and road corridors.</p>
+<p class="footnote">This testing build stores saved worlds in this browser on this computer. Clearing browser storage removes those saves. For reliable local saves, start the game with the Windows PowerShell launcher. The map is a lightweight gameplay illustration with estimated population, terrain, and road corridors.</p>
 </main>
 <main id="game" class="game" hidden>
 <header class="gamebar"><button id="back-worlds" class="subtle" aria-label="Back to worlds">← Worlds</button><div class="brand">Rail Network Builder</div><div class="worldtitle"><strong id="active-name"></strong><span id="active-country" class="small"></span></div><button id="save-now">Saved locally</button><button id="game-theme" aria-label="Change appearance">◐</button></header>
@@ -42,6 +42,59 @@ de:{bounds:[5.5,15.5,47,55.3],step:.16,polys:[[[6.7,53.6],[7.2,52.2],[6.0,51.8],
 jp:{bounds:[128,146,30,46],step:.2,polys:[[[130.8,31],[132,32],[133.5,33],[134.5,34],[135.5,34.5],[136.5,35],[137.5,36],[138.5,36.5],[139.5,37],[140.5,39],[141.5,41],[141,43],[140,45],[142,45.5],[144,44],[145.5,43],[145,41],[143,40],[142,38],[141,36],[140,35],[139,34],[137,34],[136,33],[134,33],[132,32],[130.8,31]],[[130.5,33.8],[131.5,34],[132.5,34.2],[133.5,34.5],[134.5,34.8],[135,35.2],[134,35.5],[132.5,35.2],[131,34.8],[130.5,33.8]],[[129.5,31],[130.8,31],[131.2,32.5],[130.5,33.3],[129.5,32.8],[129.5,31]]],cities:[['Tokyo',139.69,35.68,37],['Osaka',135.5,34.69,19],['Nagoya',136.9,35.18,9],['Fukuoka',130.4,33.59,5.5],['Sapporo',141.35,43.06,2.6],['Sendai',140.87,38.27,2.3],['Hiroshima',132.46,34.39,2],['Kyoto',135.77,35.01,2.6]],roads:[[139.7,35.7,138.4,35.2,136.9,35.18,135.5,34.69],[135.5,34.69,133.5,34.5,132.46,34.39,130.4,33.59],[139.7,35.7,140.87,38.27,141.35,43.06]]},
 au:{bounds:[112,154,-45,-10],step:.42,polys:[[[113, -22],[114,-18],[122,-16],[130,-13],[137,-12],[141,-16],[145,-15],[153,-25],[151,-35],[147,-39],[140,-38],[136,-35],[130,-33],[124,-34],[118,-35],[115,-32],[113,-27],[113,-22]]],cities:[['Sydney',151.2,-33.87,5.3],['Melbourne',144.96,-37.81,5],['Brisbane',153.03,-27.47,2.5],['Perth',115.86,-31.95,2.1],['Adelaide',138.6,-34.93,1.4],['Canberra',149.13,-35.28,.5],['Hobart',147.33,-42.88,.25]],roads:[[115.86,-31.95,125,-32,134,-33,138.6,-34.93,144.96,-37.81,151.2,-33.87],[144.96,-37.81,147,-36,153.03,-27.47],[151.2,-33.87,149.13,-35.28],[138.6,-34.93,136,-32,134,-27]]}
 };
+// European city seed data. Population values are approximate metro-scale millions for gameplay.
+// Country outlines are deliberately schematic; corridors connect the listed urban centres.
+const europeSeed=[
+['al','Albania',19.3,21.1,39.6,42.7,'Tirana|19.82|41.33|0.9;Durrës|19.45|41.32|0.3;Shkodër|19.51|42.07|0.2;Vlorë|19.49|40.47|0.2;Elbasan|20.08|41.11|0.2'],
+['ad','Andorra',1.4,1.8,42.4,42.7,'Andorra la Vella|1.52|42.51|0.05;Escaldes-Engordany|1.54|42.51|0.04'],
+['at','Austria',9.5,17.2,46.4,49.1,'Vienna|16.37|48.21|2.9;Graz|15.44|47.07|0.6;Linz|14.29|48.31|0.4;Salzburg|13.05|47.8|0.3;Innsbruck|11.39|47.27|0.3;Klagenfurt|14.31|46.62|0.2'],
+['by','Belarus',23.2,32.8,51.2,56.2,'Minsk|27.56|53.9|2.0;Gomel|31.0|52.43|0.5;Mogilev|30.34|53.9|0.4;Vitebsk|30.2|55.19|0.4;Grodno|23.83|53.68|0.4;Brest|23.7|52.1|0.4'],
+['be','Belgium',2.5,6.4,49.5,51.6,'Brussels|4.35|50.85|2.1;Antwerp|4.4|51.22|1.0;Ghent|3.72|51.05|0.6;Liège|5.58|50.63|0.6;Charleroi|4.44|50.41|0.4;Bruges|3.22|51.21|0.3'],
+['ba','Bosnia and Herzegovina',15.7,19.7,42.5,45.3,'Sarajevo|18.41|43.86|0.5;Banja Luka|17.19|44.77|0.2;Tuzla|18.67|44.54|0.2;Zenica|17.91|44.2|0.1;Mostar|17.81|43.34|0.1'],
+['bg','Bulgaria',22.3,28.7,41.2,44.3,'Sofia|23.32|42.7|1.3;Plovdiv|24.75|42.14|0.4;Varna|27.91|43.21|0.4;Burgas|27.47|42.5|0.2;Ruse|25.95|43.84|0.2;Stara Zagora|25.63|42.43|0.2'],
+['hr','Croatia',13.5,19.5,42.3,46.6,'Zagreb|15.98|45.81|1.1;Split|16.44|43.51|0.3;Rijeka|14.44|45.33|0.2;Osijek|18.7|45.55|0.1;Zadar|15.23|44.12|0.1'],
+['cy','Cyprus',32.2,34.6,34.5,35.7,'Nicosia|33.36|35.19|0.3;Limassol|33.04|34.68|0.2;Larnaca|33.63|34.92|0.1;Paphos|32.42|34.77|0.1'],
+['cz','Czechia',12.1,18.9,48.5,51.1,'Prague|14.42|50.08|1.4;Brno|16.61|49.2|0.4;Ostrava|18.26|49.82|0.3;Plzeň|13.38|49.75|0.2;Olomouc|17.25|49.59|0.1;Liberec|15.05|50.77|0.1'],
+['dk','Denmark',8.0,15.2,54.5,57.8,'Copenhagen|12.57|55.68|1.4;Aarhus|10.21|56.16|0.3;Odense|10.39|55.4|0.2;Aalborg|9.92|57.05|0.2;Esbjerg|8.45|55.47|0.1'],
+['ee','Estonia',21.7,28.2,57.5,59.7,'Tallinn|24.75|59.44|0.5;Tartu|26.72|58.38|0.1;Narva|28.19|59.38|0.1;Pärnu|24.5|58.39|0.1'],
+['fi','Finland',20.5,31.6,59.7,70.1,'Helsinki|24.94|60.17|1.5;Tampere|23.76|61.5|0.4;Turku|22.27|60.45|0.3;Oulu|25.47|65.01|0.2;Jyväskylä|25.75|62.24|0.2;Lahti|25.66|60.98|0.1'],
+['gr','Greece',19.3,28.3,34.8,41.8,'Athens|23.73|37.98|3.6;Thessaloniki|22.94|40.64|0.9;Patras|21.73|38.25|0.3;Heraklion|25.13|35.34|0.2;Larissa|22.42|39.64|0.2;Volos|22.94|39.36|0.2'],
+['hu','Hungary',16.1,22.9,45.7,48.6,'Budapest|19.04|47.5|1.8;Debrecen|21.63|47.53|0.2;Szeged|20.15|46.25|0.2;Miskolc|20.78|48.1|0.2;Pécs|18.23|46.07|0.2;Győr|17.64|47.68|0.1'],
+['is','Iceland', -24.7,-13.3,63.3,66.6,'Reykjavík|-21.94|64.15|0.2;Keflavík|-22.56|64.0|0.03;Akureyri|-18.09|65.68|0.02'],
+['ie','Ireland',-10.7,-5.4,51.3,55.5,'Dublin|-6.26|53.35|1.4;Cork|-8.47|51.9|0.3;Limerick|-8.63|52.66|0.1;Galway|-9.05|53.27|0.1;Waterford|-7.11|52.26|0.1'],
+['it','Italy',6.6,18.6,36.6,47.2,'Rome|12.5|41.9|4.3;Milan|9.19|45.46|3.2;Naples|14.27|40.85|3.1;Turin|7.69|45.07|1.7;Palermo|13.36|38.12|0.9;Bologna|11.34|44.5|1.0;Florence|11.26|43.77|0.7;Venice|12.32|45.44|0.8;Genoa|8.93|44.41|0.7;Bari|16.87|41.12|0.7;Catania|15.09|37.51|0.7'],
+['xk','Kosovo',20.0,21.8,41.8,43.3,'Pristina|21.17|42.66|0.5;Prizren|20.74|42.21|0.2;Peja|20.29|42.66|0.1;Mitrovica|20.87|42.89|0.1;Gjakova|20.43|42.38|0.1'],
+['lv','Latvia',20.9,28.3,55.7,58.1,'Riga|24.11|56.95|0.7;Daugavpils|26.54|55.87|0.1;Liepāja|21.01|56.51|0.1;Jelgava|23.71|56.65|0.1;Jūrmala|23.77|56.97|0.1'],
+['li','Liechtenstein',9.47,9.65,47.05,47.28,'Vaduz|9.52|47.14|0.01;Schaan|9.51|47.17|0.01'],
+['lt','Lithuania',20.9,26.9,53.9,56.5,'Vilnius|25.28|54.69|0.7;Kaunas|23.9|54.9|0.4;Klaipėda|21.14|55.71|0.2;Šiauliai|23.32|55.93|0.1;Panevėžys|24.36|55.73|0.1'],
+['lu','Luxembourg',5.7,6.5,49.4,50.2,'Luxembourg City|6.13|49.61|0.2;Esch-sur-Alzette|5.98|49.5|0.1;Differdange|5.89|49.52|0.05'],
+['mt','Malta',14.2,14.6,35.8,36.1,'Valletta|14.51|35.9|0.1;Birkirkara|14.46|35.9|0.2;Sliema|14.5|35.91|0.2'],
+['md','Moldova',26.6,30.2,45.4,48.5,'Chișinău|28.86|47.01|0.7;Bălți|27.93|47.76|0.1;Tiraspol|29.64|46.84|0.1;Cahul|28.19|45.9|0.05'],
+['mc','Monaco',7.4,7.45,43.72,43.76,'Monaco|7.42|43.74|0.04'],
+['me','Montenegro',18.4,20.4,41.8,43.6,'Podgorica|19.26|42.43|0.2;Nikšić|18.95|42.77|0.07;Bar|19.1|42.1|0.04;Bijelo Polje|19.75|43.04|0.03'],
+['nl','Netherlands',3.3,7.3,50.7,53.6,'Amsterdam|4.9|52.37|2.5;Rotterdam|4.48|51.92|1.0;The Hague|4.3|52.08|0.8;Utrecht|5.12|52.09|0.7;Eindhoven|5.48|51.44|0.4;Groningen|6.57|53.22|0.3;Maastricht|5.69|50.85|0.2'],
+['mk','North Macedonia',20.4,23.1,40.8,42.4,'Skopje|21.43|41.998|0.6;Bitola|21.34|41.03|0.1;Kumanovo|21.72|42.13|0.1;Prilep|21.55|41.35|0.1;Tetovo|20.97|42.01|0.1'],
+['no','Norway',4.4,31.2,57.9,71.2,'Oslo|10.75|59.91|1.1;Bergen|5.32|60.39|0.4;Trondheim|10.4|63.43|0.3;Stavanger|5.73|58.97|0.3;Drammen|10.2|59.74|0.1;Bodø|14.4|67.28|0.06;Tromsø|18.96|69.65|0.08'],
+['pl','Poland',14.1,24.2,49.0,54.9,'Warsaw|21.01|52.23|3.1;Kraków|19.94|50.06|0.8;Łódź|19.46|51.76|0.7;Wrocław|17.04|51.11|0.7;Poznań|16.93|52.41|0.6;Gdańsk|18.65|54.35|0.8;Katowice|19.02|50.26|2.3;Lublin|22.57|51.25|0.4;Szczecin|14.55|53.43|0.4'],
+['pt','Portugal',-9.6,-6.2,36.9,42.2,'Lisbon|-9.14|38.72|2.9;Porto|-8.61|41.15|1.3;Braga|-8.43|41.55|0.2;Coimbra|-8.43|40.21|0.2;Faro|-7.93|37.02|0.1;Aveiro|-8.65|40.64|0.1'],
+['ro','Romania',20.2,29.8,43.6,48.3,'Bucharest|26.1|44.43|2.3;Cluj-Napoca|23.59|46.77|0.4;Timișoara|21.23|45.75|0.4;Iași|27.59|47.16|0.4;Constanța|28.63|44.18|0.3;Brașov|25.6|45.66|0.3;Craiova|23.8|44.32|0.3'],
+['ru','Russia (European rail region)',19.6,60.0,44.0,69.0,'Moscow|37.62|55.75|17;Saint Petersburg|30.31|59.94|5.6;Nizhny Novgorod|44.0|56.33|1.3;Kazan|49.11|55.79|1.3;Rostov-on-Don|39.72|47.24|1.1;Volgograd|44.5|48.71|1.0;Samara|50.1|53.2|1.2;Voronezh|39.2|51.66|1.0;Yaroslavl|39.89|57.63|0.6'],
+['sm','San Marino',12.4,12.5,43.9,44.0,'San Marino|12.45|43.94|0.03'],
+['rs','Serbia',18.8,23.0,42.2,46.2,'Belgrade|20.45|44.79|1.7;Novi Sad|19.84|45.27|0.3;Niš|21.9|43.32|0.2;Kragujevac|20.92|44.01|0.2;Subotica|19.67|46.1|0.1'],
+['sk','Slovakia',16.8,22.6,47.7,49.6,'Bratislava|17.11|48.15|0.7;Košice|21.26|48.72|0.2;Prešov|21.24|48.99|0.1;Žilina|18.74|49.22|0.1;Nitra|18.09|48.31|0.1'],
+['si','Slovenia',13.4,16.6,45.4,46.9,'Ljubljana|14.51|46.06|0.3;Maribor|15.65|46.55|0.1;Celje|15.27|46.23|0.1;Koper|13.73|45.55|0.1;Kranj|14.36|46.24|0.1'],
+['es','Spain',-9.4,3.4,35.8,43.9,'Madrid|-3.7|40.42|6.8;Barcelona|2.17|41.39|5.6;Valencia|-0.38|39.47|1.8;Seville|-5.99|37.39|1.5;Zaragoza|-0.88|41.65|0.7;Málaga|-4.42|36.72|1.0;Bilbao|-2.94|43.26|1.0;Alicante|-0.49|38.35|0.8;Murcia|-1.13|37.99|0.7;Valladolid|-4.73|41.65|0.4;A Coruña|-8.41|43.36|0.4'],
+['se','Sweden',10.9,24.2,55.3,69.1,'Stockholm|18.07|59.33|2.4;Gothenburg|11.97|57.71|1.0;Malmö|13.0|55.6|0.8;Uppsala|17.64|59.86|0.3;Linköping|15.62|58.41|0.2;Örebro|15.21|59.27|0.2;Umeå|20.26|63.83|0.1;Luleå|22.15|65.58|0.1'],
+['ch','Switzerland',5.9,10.6,45.8,47.9,'Zürich|8.54|47.38|1.4;Geneva|6.14|46.2|0.6;Basel|7.59|47.56|0.5;Bern|7.45|46.95|0.4;Lausanne|6.63|46.52|0.4;Lucerne|8.31|47.05|0.2;Lugano|8.95|46.0|0.2'],
+['tr','Türkiye (European rail region)',26.0,30.0,40.8,42.2,'Istanbul|28.98|41.01|16;Edirne|26.56|41.68|0.2;Tekirdağ|27.51|40.98|0.2;Çorlu|27.8|41.16|0.2'],
+['ua','Ukraine',22.1,40.2,44.2,52.4,'Kyiv|30.52|50.45|3.0;Kharkiv|36.23|49.99|1.4;Odesa|30.72|46.48|1.0;Dnipro|35.05|48.46|1.0;Lviv|24.03|49.84|0.8;Zaporizhzhia|35.14|47.84|0.7;Vinnytsia|28.48|49.23|0.4;Poltava|34.55|49.59|0.3'],
+['va','Vatican City',12.44,12.46,41.9,41.91,'Vatican City|12.45|41.9|0.001'],
+['ge','Georgia',40.0,46.8,41.0,43.7,'Tbilisi|44.79|41.72|1.2;Batumi|41.64|41.62|0.2;Kutaisi|42.7|42.27|0.2;Rustavi|45.0|41.55|0.1;Zugdidi|41.87|42.51|0.1'],
+['am','Armenia',43.4,46.7,38.8,41.3,'Yerevan|44.51|40.18|1.1;Gyumri|43.85|40.79|0.1;Vanadzor|44.49|40.81|0.1;Hrazdan|44.76|40.5|0.06'],
+['az','Azerbaijan',44.8,50.7,38.4,41.9,'Baku|49.87|40.41|2.3;Ganja|46.36|40.68|0.3;Sumqayit|49.63|40.59|0.3;Lankaran|48.85|38.75|0.1;Mingachevir|47.05|40.77|0.1']
+];
+for(const [code,name,minLon,maxLon,minLat,maxLat,raw] of europeSeed){countryNames[code]=name;const cities=raw.split(';').map(s=>{const [n,x,y,p]=s.split('|');return[n,+x,+y,+p]});const bounds=[minLon,maxLon,minLat,maxLat],step=Math.max(.07,Math.min(.45,(maxLon-minLon)/28));const outline=[[minLon,minLat],[minLon,maxLat],[maxLon,maxLat],[maxLon,minLat]];const hub=cities[0],roads=cities.slice(1).map(c=>[hub[1],hub[2],c[1],c[2]]);maps[code]={bounds,step,polys:[outline],cities,roads}}
+const countrySelect=document.querySelector('#country');for(const [code,name] of Object.entries(countryNames)){if(!countrySelect.querySelector(`option[value="${code}"]`)){const o=document.createElement('option');o.value=code;o.textContent=name;countrySelect.append(o)}}
 let db=loadWorlds(),active=null,layer='terrain',showRoads=true,tool='inspect',pendingTrack=null,selected=null,hexes=[],mapW=0,mapH=0,dpr=1,canvas,ctx;
 function loadWorlds(){try{const v=JSON.parse(localStorage.getItem(STORAGE)||'[]');return Array.isArray(v)?v:[]}catch{return[]}}
 function saveWorlds(){try{localStorage.setItem(STORAGE,JSON.stringify(db));if(active)document.querySelector('#save-now').textContent='Saved locally'}catch{document.querySelector('#save-now').textContent='Save unavailable'}}
