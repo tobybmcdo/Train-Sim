@@ -2,7 +2,7 @@
 
 ## Playable local build
 
-On Windows, run [`run-game.ps1`](run-game.ps1) from PowerShell. It serves the single-page game only on your own computer and opens it in your browser; keep the PowerShell window open while playing. Then create a named world, choose a starting country (United States by default), place stations, and connect map tiles with track. Worlds autosave in that browser on this computer. Other desktop systems can run `index.html` from any local static web server. The appearance follows the system light/dark setting by default, with System, Light, and Dark choices on the launcher. No account, map API, or additional game installation is needed.
+On Windows, double-click [`run-game.cmd`](run-game.cmd). It launches the local PowerShell server with a process-only execution-policy override and does not change the computer's saved PowerShell policy. The game is served only on your own computer and opens in your browser; keep the console window open while playing. Then create a named world, choose a starting country (United States by default), place stations, and connect map tiles with track. Worlds autosave in that browser on this computer. Other desktop systems can run `index.html` from any local static web server. The appearance follows the system light/dark setting by default, with System, Light, and Dark choices on the launcher. No account, map API, or additional game installation is needed.
 
 This is a local testing build. Saves are not synced between browsers or computers, and Steam sign-in/cloud saves are a future integration. Country outlines, terrain, road corridors, and population density are lightweight illustrative game data rather than an authoritative geographic dataset.
 ## Core idea
