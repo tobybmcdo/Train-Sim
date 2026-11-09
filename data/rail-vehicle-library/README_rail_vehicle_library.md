@@ -4,7 +4,7 @@ This is a workable, game-oriented catalog foundation: `rail_vehicle_catalog.csv`
 
 ## Coverage and completeness
 
-This release contains 28 records: 25 named vehicle/family records and 3 generic gameplay archetypes. It is a starter catalog, not a verified census of every railway vehicle ever built. No single public source is a complete, authoritative, global inventory of every engine, coach, wagon, tram, metro car, and trainset. Records also represent a mix of individual models and families; those levels must be made explicit before production use. A claim of complete coverage would be misleading.
+This release contains 54 records: 51 named vehicle/family records and 3 generic gameplay archetypes. It is a starter catalog, not a verified census of every railway vehicle ever built. No single public source is a complete, authoritative, global inventory of every engine, coach, wagon, tram, metro car, and trainset. Records also represent a mix of individual models and families; those levels must be made explicit before production use. A claim of complete coverage would be misleading.
 
 Use this library as an expandable registry. Track each source, source confidence, last checked date, scope (individual vehicle, class/family, or generic archetype), and coverage status. Keep uncertain facts blank rather than inventing values. `0` means a known non-applicable value only where the field definition supports it; blank means unknown. Some seed rows still need data cleanup and verification, especially approximate or generic records.
 
@@ -46,3 +46,7 @@ Use tags for discovery and game balancing, while keeping measurable properties (
 - National operators, manufacturers, rail museums, transit agencies, and vehicle registers should be used to verify technical specifications and lifecycle status.
 
 Generated on 2026-11-09. Audit the seed records and database rights before shipping them in a commercial game.
+
+## Regional coverage added
+
+New York City region coverage now includes NYCT subway and Staten Island Railway cars, plus LIRR and Metro-North commuter passenger cars. See [New York City fleet research and sources](us_new_york_city_sources.md). The coverage reflects operator fleet lists, not every outside operator that reaches New York City.
