@@ -31,3 +31,52 @@ CREATE INDEX vehicle_category_idx ON vehicle(vehicle_category);
 CREATE INDEX tag_group_idx ON tag(tag_group);
 -- Import the accompanying CSV into a staging table, then split pipe-separated fields
 -- (gauges_mm, service_roles, service_scale, tags) into normalized child tables.
+
+-- 2025 U.S. FTA National Transit Database rail fleet inventory.
+CREATE TABLE ntd_vehicle_profile (
+  profile_id TEXT PRIMARY KEY,
+  vehicle_type TEXT NOT NULL,
+  manufacturer TEXT,
+  model TEXT,
+  manufacture_year INTEGER,
+  fuel_type TEXT,
+  vehicle_length_ft REAL,
+  vehicle_length_m REAL,
+  capacity_seated INTEGER,
+  capacity_standing INTEGER,
+  capacity_total INTEGER,
+  max_speed_kmh REAL,
+  active_fleet_vehicles INTEGER NOT NULL,
+  agency_count INTEGER NOT NULL,
+  source_url TEXT NOT NULL,
+  checked_on TEXT NOT NULL
+);
+CREATE TABLE ntd_fleet_deployment (
+  ntd_id TEXT NOT NULL,
+  inventory_id TEXT NOT NULL,
+  profile_id TEXT NOT NULL REFERENCES ntd_vehicle_profile(profile_id),
+  service_city_region TEXT NOT NULL,
+  state TEXT,
+  agency TEXT NOT NULL,
+  modes TEXT,
+  agency_fleet_id TEXT,
+  rebuild_year INTEGER,
+  active_fleet_vehicles INTEGER NOT NULL,
+  ada_fleet_vehicles INTEGER,
+  total_miles_active REAL,
+  source_url TEXT NOT NULL,
+  checked_on TEXT NOT NULL,
+  PRIMARY KEY (ntd_id, inventory_id)
+);
+CREATE TABLE ntd_city_coverage (
+  service_city_region TEXT PRIMARY KEY,
+  states TEXT,
+  agencies TEXT NOT NULL,
+  modes TEXT,
+  vehicle_categories TEXT,
+  active_inventory_rows INTEGER NOT NULL,
+  active_fleet_vehicles INTEGER NOT NULL,
+  source_url TEXT NOT NULL
+);
+CREATE INDEX ntd_deployment_city_idx ON ntd_fleet_deployment(service_city_region);
+CREATE INDEX ntd_deployment_agency_idx ON ntd_fleet_deployment(agency);
