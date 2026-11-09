@@ -2,11 +2,9 @@
 
 ## Playable local build
 
-Open [`index.html`](index.html) in a current desktop or mobile browser to start a world. Name it, choose a starting country (United States by default), then build stations and connect map tiles with track. Worlds autosave in that browser's local storage on this computer. The appearance follows the system light/dark setting by default, with System, Light, and Dark choices on the launcher. No server, account, map API, or installation is needed for this prototype.
+On Windows, run [`run-game.ps1`](run-game.ps1) from PowerShell. It serves the single-page game only on your own computer and opens it in your browser; keep the PowerShell window open while playing. Then create a named world, choose a starting country (United States by default), place stations, and connect map tiles with track. Worlds autosave in that browser on this computer. Other desktop systems can run `index.html` from any local static web server. The appearance follows the system light/dark setting by default, with System, Light, and Dark choices on the launcher. No account, map API, or additional game installation is needed.
 
 This is a local testing build. Saves are not synced between browsers or computers, and Steam sign-in/cloud saves are a future integration. Country outlines, terrain, road corridors, and population density are lightweight illustrative game data rather than an authoritative geographic dataset.
-
-
 ## Core idea
 
 A strategy and management game about building rail systems that connect small communities to national and international networks. Players design infrastructure, choose trains, set service patterns, and respond to changing demand. The central challenge is making distinct networks work together: local lines feed regional services, regional services connect to national routes, and national systems link across borders.
