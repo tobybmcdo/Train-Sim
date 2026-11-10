@@ -6,7 +6,15 @@ $pagePath = Join-Path $gameRoot 'index.html'
 if (-not (Test-Path -LiteralPath $pagePath)) { throw "Game page not found: $pagePath" }
 
 $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, $Port)
-$listener.Start()
+try {
+    $listener.Start()
+} catch [System.Net.Sockets.SocketException] {
+    if ($Port -eq 0) { throw }
+    $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, 0)
+    $listener.Start()
+    Write-Host "Port $Port is unavailable; using an available local port instead."
+}
+$Port = $listener.LocalEndpoint.Port
 $address = "http://127.0.0.1:$Port/"
 Write-Host "Rail Network Builder is running at $address"
 Write-Host 'Keep this window open while you play. Press Ctrl+C to stop the local game server.'
